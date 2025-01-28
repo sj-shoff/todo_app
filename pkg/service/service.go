@@ -7,7 +7,6 @@ import (
 
 type Authorization interface {
 	CreateUser(user todo.User) (int, error)
-	GetUser(username, password string) (todo.User, error)
 	GenerateToken(username, password string) (string, error)
 }
 
