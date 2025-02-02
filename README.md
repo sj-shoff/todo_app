@@ -18,7 +18,7 @@ migrate create -ext sql -dir ./schema -seq init
 migrate -path ./schema -database 'postgres://postgres:03032006@localhost:5436/postgres?sslmode=disable' up
 ```
 
-### Запуск БД в контейнере(1я строка - берем айдишник postgres)
+### Проверка БД в контейнере(1я строка - берем айдишник postgres)
 ```bash
 docker ps
 docker exec -it 6188ec4b2fdd /bin/bash
