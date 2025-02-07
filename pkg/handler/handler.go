@@ -1,9 +1,8 @@
 package handler
 
 import (
+	_ "todo/docs" // swagger docs
 	"todo/pkg/service"
-
-	_ "todo_app/docs" // swagger docs
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
