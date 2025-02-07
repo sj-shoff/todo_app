@@ -25,3 +25,8 @@ docker exec -it 6188ec4b2fdd /bin/bash
 psql -U postgres
 \d
 ```
+### Swagger
+```bash
+swag init -g cmd/main.go
+```
+### Чтобы посмотреть документацию Swagger: http://localhost:8000/swagger/index.html
