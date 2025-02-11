@@ -8,17 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary Create a new todo item
-// @Description Creates a new todo item in a specific todo list.
-// @ID create-todo-item
+// @Summary Create todo item
+// @Security ApiKeyAuth
+// @Tags items
+// @Description create todo item
+// @ID create-item
 // @Accept  json
 // @Produce  json
-// @Param listId path int true "Todo list ID"
-// @Param input body todo.TodoItem true "Todo item information"
-// @Success 200 {object} map[string]interface{} "Returns the ID of the created todo item"
-// @Failure 400 {object} errorResponse "Invalid input data or list ID"
-// @Failure 500 {object} errorResponse "Internal server error"
-// @Router /api/lists/{listId}/items [post]
+// @Param id path int true "list id"
+// @Param input body todo.TodoItem true "item info"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400,500 {object} errorResponse
+// @Router /api/lists/{id}/items [post]
 func (h *Handler) createItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -46,16 +47,17 @@ func (h *Handler) createItem(c *gin.Context) {
 	})
 }
 
-// @Summary Get all todo items in a list
-// @Description Retrieves all todo items in a specific todo list.
-// @ID get-all-todo-items
+// @Summary Get all todo items
+// @Security ApiKeyAuth
+// @Tags items
+// @Description get all todo items
+// @ID get-all-items
 // @Accept  json
 // @Produce  json
-// @Param listId path int true "Todo list ID"
-// @Success 200 {array} todo.TodoItem "Returns an array of todo items"
-// @Failure 400 {object} errorResponse "Invalid list ID"
-// @Failure 500 {object} errorResponse "Internal server error"
-// @Router /api/lists/{listId}/items [get]
+// @Param id path int true "list id"
+// @Success 200 {array} todo.TodoItem
+// @Failure 400,500 {object} errorResponse
+// @Router /api/lists/{id}/items [get]
 func (h *Handler) getAllItems(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -78,17 +80,17 @@ func (h *Handler) getAllItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
-// @Summary Get a todo item by ID
-// @Description Retrieves a specific todo item by its ID.
-// @ID get-todo-item-by-id
+// @Summary Get todo item by id
+// @Security ApiKeyAuth
+// @Tags items
+// @Description get todo item by id
+// @ID get-item-by-id
 // @Accept  json
 // @Produce  json
-// @Param itemId path int true "Todo item ID"
-// @Success 200 {object} todo.TodoItem "Returns the todo item"
-// @Failure 400 {object} errorResponse "Invalid item ID"
-// @Failure 404 {object} errorResponse "Item not found"
-// @Failure 500 {object} errorResponse "Internal server error"
-// @Router /api/items/{itemId} [get]
+// @Param id path int true "item id"
+// @Success 200 {object} todo.TodoItem
+// @Failure 400,500 {object} errorResponse
+// @Router /api/items/{id} [get]
 func (h *Handler) getItemById(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -111,18 +113,18 @@ func (h *Handler) getItemById(c *gin.Context) {
 	c.JSON(http.StatusOK, item)
 }
 
-// @Summary Update a todo item
-// @Description Updates a todo item's title, description, and/or done status.
-// @ID update-todo-item
+// @Summary Update todo item
+// @Security ApiKeyAuth
+// @Tags items
+// @Description update todo item
+// @ID update-item
 // @Accept  json
 // @Produce  json
-// @Param itemId path int true "Todo item ID"
-// @Param input body todo.UpdateItemInput true "Fields to update"
-// @Success 200 {object} statusResponse "Returns success status"
-// @Failure 400 {object} errorResponse "Invalid input data or item ID"
-// @Failure 404 {object} errorResponse "Item not found"
-// @Failure 500 {object} errorResponse "Internal server error"
-// @Router /api/items/{itemId} [put]
+// @Param id path int true "item id"
+// @Param input body todo.UpdateItemInput true "item info"
+// @Success 200 {object} statusResponse
+// @Failure 400,500 {object} errorResponse
+// @Router /api/items/{id} [put]
 func (h *Handler) updateItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -150,17 +152,17 @@ func (h *Handler) updateItem(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
-// @Summary Delete a todo item
-// @Description Deletes a todo item by its ID.
-// @ID delete-todo-item
+// @Summary Delete todo item
+// @Security ApiKeyAuth
+// @Tags items
+// @Description delete todo item
+// @ID delete-item
 // @Accept  json
 // @Produce  json
-// @Param itemId path int true "Todo item ID"
-// @Success 200 {object} statusResponse "Returns success status"
-// @Failure 400 {object} errorResponse "Invalid item ID"
-// @Failure 404 {object} errorResponse "Item not found"
-// @Failure 500 {object} errorResponse "Internal server error"
-// @Router /api/items/{itemId} [delete]
+// @Param id path int true "item id"
+// @Success 200 {object} statusResponse
+// @Failure 400,500 {object} errorResponse
+// @Router /api/items/{id} [delete]
 func (h *Handler) deleteItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
