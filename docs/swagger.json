@@ -173,6 +173,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "lists"
+                ],
                 "summary": "Get all todo lists",
                 "operationId": "get-all-todo-lists",
                 "responses": {
@@ -200,6 +203,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Create a new todo list",
                 "operationId": "create-todo-list",
@@ -246,6 +252,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "lists"
+                ],
                 "summary": "Get a todo list by ID",
                 "operationId": "get-todo-list-by-id",
                 "parameters": [
@@ -291,6 +300,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Update a todo list",
                 "operationId": "update-todo-list",
@@ -346,6 +358,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Delete a todo list",
                 "operationId": "delete-todo-list",

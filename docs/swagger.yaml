@@ -200,6 +200,8 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Get all todo lists
+      tags:
+      - lists
     post:
       consumes:
       - application/json
@@ -229,6 +231,8 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Create a new todo list
+      tags:
+      - lists
   /api/lists/{id}:
     delete:
       consumes:
@@ -261,6 +265,8 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Delete a todo list
+      tags:
+      - lists
     get:
       consumes:
       - application/json
@@ -292,6 +298,8 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Get a todo list by ID
+      tags:
+      - lists
     put:
       consumes:
       - application/json
@@ -329,6 +337,8 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Update a todo list
+      tags:
+      - lists
   /api/lists/{id}/items:
     get:
       consumes:

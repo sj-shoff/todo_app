@@ -9,6 +9,7 @@ import (
 )
 
 // @Summary Create a new todo list
+// @Tags lists
 // @Description Creates a new todo list for the authenticated user.
 // @ID create-todo-list
 // @Accept  json
@@ -47,6 +48,7 @@ type getAllListsResponse struct {
 }
 
 // @Summary Get all todo lists
+// @Tags lists
 // @Description Retrieves all todo lists for the authenticated user.
 // @ID get-all-todo-lists
 // @Accept  json
@@ -72,6 +74,7 @@ func (h *Handler) getAllLists(c *gin.Context) {
 }
 
 // @Summary Get a todo list by ID
+// @Tags lists
 // @Description Retrieves a specific todo list by its ID.
 // @ID get-todo-list-by-id
 // @Accept  json
@@ -104,6 +107,7 @@ func (h *Handler) getListById(c *gin.Context) {
 }
 
 // @Summary Update a todo list
+// @Tags lists
 // @Description Updates a todo list's title and/or description.
 // @ID update-todo-list
 // @Accept  json
@@ -143,6 +147,7 @@ func (h *Handler) updateList(c *gin.Context) {
 }
 
 // @Summary Delete a todo list
+// @Tags lists
 // @Description Deletes a todo list by its ID.
 // @ID delete-todo-list
 // @Accept  json

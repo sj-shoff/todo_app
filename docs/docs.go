@@ -179,6 +179,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "lists"
+                ],
                 "summary": "Get all todo lists",
                 "operationId": "get-all-todo-lists",
                 "responses": {
@@ -206,6 +209,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Create a new todo list",
                 "operationId": "create-todo-list",
@@ -252,6 +258,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "lists"
+                ],
                 "summary": "Get a todo list by ID",
                 "operationId": "get-todo-list-by-id",
                 "parameters": [
@@ -297,6 +306,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Update a todo list",
                 "operationId": "update-todo-list",
@@ -352,6 +364,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "lists"
                 ],
                 "summary": "Delete a todo list",
                 "operationId": "delete-todo-list",
