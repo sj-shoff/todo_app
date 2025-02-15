@@ -2,26 +2,29 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build: .  # Используем Dockerfile в текущей директории
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Порт, на котором будет доступно приложение
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_USER=user
-      - DB_PASSWORD=${DB_PASSWORD}  # Используем переменную из .env
-      - DB_NAME=todo
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_SSLMODE=${DB_SSLMODE}
+    command: ["./wait-for-postgres.sh", "${DB_HOST}", "${DB_PORT}", "${DB_USER}", "${DB_NAME}", "${DB_SSLMODE}", "--", "./todo-app"]
     restart: unless-stopped
 
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Используем переменную из .env
-      POSTGRES_DB: todo
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "5436:5436"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
