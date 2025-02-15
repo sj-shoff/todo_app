@@ -1,32 +1,27 @@
-# todo_app
+# REST API Для Создания TODO Списков на Go
 
-### Работа с докером:
-```bash
-docker run --name=todo-db -e POSTGRES_PASSWORD='03032006' -p 5436:5432 -d --rm postgres
-docker ps
+## <a href="https://www.youtube.com/playlist?list=PLbTTxxr-hMmyFAvyn7DeOgNRN8BQdjFm8">Видеокурс на YouTube</a>
+
+## В курсе реализовано:
+- Разработка Веб-Приложений на Go, следуя дизайну REST API.
+- Работа с фреймворком <a href="https://github.com/gin-gonic/gin">gin-gonic/gin</a>.
+- Подход Чистой Архитектуры в построении структуры приложения. Техника внедрения зависимости.
+- Работа с БД Postgres. Запуск из Docker. Генерация файлов миграций. 
+- Конфигурация приложения с помощью библиотеки <a href="https://github.com/spf13/viper">spf13/viper</a>. Работа с переменными окружения.
+- Работа с БД, используя библиотеку <a href="https://github.com/jmoiron/sqlx">sqlx</a>.
+- Регистрация и аутентификация. Работа с JWT. Middleware.
+- Написание SQL запросов.
+- Graceful Shutdown
+- Swagger docs
+
+### Для запуска приложения:
+
+```
+make build && make run
 ```
 
-### Миграции - а-ля система контроля версий для баз данных
-```bash
-import "github.com/golang-migrate/migrate/v4" 
-mkdir -p ./schema
-migrate create -ext sql -dir ./schema -seq init
-```
+Если приложение запускается впервые, необходимо применить миграции к базе данных:
 
-### Применение миграций:
-```bash
-migrate -path ./schema -database 'postgres://postgres:03032006@localhost:5436/postgres?sslmode=disable' up
 ```
-
-### Проверка БД в контейнере(1я строка - берем айдишник postgres)
-```bash
-docker ps
-docker exec -it 6188ec4b2fdd /bin/bash
-psql -U postgres
-\d
+make migrate
 ```
-### Swagger
-```bash
-swag init -g cmd/main.go
-```
-### Чтобы посмотреть документацию Swagger: http://localhost:8000/swagger/index.html
