@@ -1,8 +1,6 @@
 # REST API Для Создания TODO Списков на Go
 
-## <a href="https://www.youtube.com/playlist?list=PLbTTxxr-hMmyFAvyn7DeOgNRN8BQdjFm8">Видеокурс на YouTube</a>
-
-## В курсе реализовано:
+## В проекте реализовано:
 - Разработка Веб-Приложений на Go, следуя дизайну REST API.
 - Работа с фреймворком <a href="https://github.com/gin-gonic/gin">gin-gonic/gin</a>.
 - Подход Чистой Архитектуры в построении структуры приложения. Техника внедрения зависимости.
