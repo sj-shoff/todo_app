@@ -47,17 +47,6 @@ func (h *Handler) createItem(c *gin.Context) {
 	})
 }
 
-// @Summary Get all todo items
-// @Security ApiKeyAuth
-// @Tags items
-// @Description get all todo items
-// @ID get-all-items
-// @Accept  json
-// @Produce  json
-// @Param id path int true "list id"
-// @Success 200 {array} todo.TodoItem
-// @Failure 400,500 {object} errorResponse
-// @Router /api/lists/{id}/items [get]
 func (h *Handler) getAllItems(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -80,17 +69,6 @@ func (h *Handler) getAllItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
-// @Summary Get todo item by id
-// @Security ApiKeyAuth
-// @Tags items
-// @Description get todo item by id
-// @ID get-item-by-id
-// @Accept  json
-// @Produce  json
-// @Param id path int true "item id"
-// @Success 200 {object} todo.TodoItem
-// @Failure 400,500 {object} errorResponse
-// @Router /api/items/{id} [get]
 func (h *Handler) getItemById(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -113,18 +91,6 @@ func (h *Handler) getItemById(c *gin.Context) {
 	c.JSON(http.StatusOK, item)
 }
 
-// @Summary Update todo item
-// @Security ApiKeyAuth
-// @Tags items
-// @Description update todo item
-// @ID update-item
-// @Accept  json
-// @Produce  json
-// @Param id path int true "item id"
-// @Param input body todo.UpdateItemInput true "item info"
-// @Success 200 {object} statusResponse
-// @Failure 400,500 {object} errorResponse
-// @Router /api/items/{id} [put]
 func (h *Handler) updateItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -152,17 +118,6 @@ func (h *Handler) updateItem(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
-// @Summary Delete todo item
-// @Security ApiKeyAuth
-// @Tags items
-// @Description delete todo item
-// @ID delete-item
-// @Accept  json
-// @Produce  json
-// @Param id path int true "item id"
-// @Success 200 {object} statusResponse
-// @Failure 400,500 {object} errorResponse
-// @Router /api/items/{id} [delete]
 func (h *Handler) deleteItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {

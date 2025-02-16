@@ -1,19 +1,11 @@
-# Загрузка переменных окружения из .env
-include .env
-export
-
-# Сборка Docker-контейнера
 build:
-	docker-compose build
+	docker-compose build todo-app
 
-# Запуск контейнера
 run:
-	docker-compose up
+	docker-compose up todo-app
 
-# Миграции базы данных
 migrate:
-	docker-compose run app migrate -path ./schema -database 'postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}' up
+	migrate -path ./schema -database 'postgres://postgres:03032006@0.0.0.0:5436/postgres?sslmode=disable' up
 
-# Генерация Swagger документации
 swag:
-	docker-compose run app swag init -g cmd/main.go
+	swag init -g cmd/main.go

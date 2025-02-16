@@ -34,7 +34,7 @@ func main() {
 		logrus.Fatalf("error initializing configs: %s", err.Error())
 	}
 
-	if err := godotenv.Load("/home/sj_shoff/todo_app/.env"); err != nil {
+	if err := godotenv.Load("/app/.env"); err != nil {
 		logrus.Fatalf("error loading .env file: %s", err.Error())
 	}
 
@@ -79,7 +79,7 @@ func main() {
 }
 
 func initConfig() error {
-	viper.AddConfigPath("/home/sj_shoff/todo_app/configs")
+	viper.AddConfigPath("configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }

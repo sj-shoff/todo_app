@@ -15,164 +15,14 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/items/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get todo item by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "items"
-                ],
-                "summary": "Get todo item by id",
-                "operationId": "get-item-by-id",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "item id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/todo.TodoItem"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "update todo item",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "items"
-                ],
-                "summary": "Update todo item",
-                "operationId": "update-item",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "item id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "item info",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/todo.UpdateItemInput"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "delete todo item",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "items"
-                ],
-                "summary": "Delete todo item",
-                "operationId": "delete-item",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "item id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/api/lists": {
             "get": {
-                "description": "Retrieves all todo lists for the authenticated user.",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get all lists",
                 "consumes": [
                     "application/json"
                 ],
@@ -182,20 +32,35 @@ const docTemplate = `{
                 "tags": [
                     "lists"
                 ],
-                "summary": "Get all todo lists",
-                "operationId": "get-all-todo-lists",
+                "summary": "Get All Lists",
+                "operationId": "get-all-lists",
                 "responses": {
                     "200": {
-                        "description": "Returns an array of todo lists",
+                        "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todo.TodoList"
-                            }
+                            "$ref": "#/definitions/handler.getAllListsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -203,7 +68,12 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Creates a new todo list for the authenticated user.",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create todo list",
                 "consumes": [
                     "application/json"
                 ],
@@ -213,11 +83,11 @@ const docTemplate = `{
                 "tags": [
                     "lists"
                 ],
-                "summary": "Create a new todo list",
-                "operationId": "create-todo-list",
+                "summary": "Create todo list",
+                "operationId": "create-list",
                 "parameters": [
                     {
-                        "description": "Todo list information",
+                        "description": "list info",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -228,20 +98,31 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns the ID of the created todo list",
+                        "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "integer"
                         }
                     },
                     "400": {
-                        "description": "Invalid input data",
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -249,9 +130,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/lists/{id}": {
+        "/api/lists/:id": {
             "get": {
-                "description": "Retrieves a specific todo list by its ID.",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get list by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -261,145 +147,35 @@ const docTemplate = `{
                 "tags": [
                     "lists"
                 ],
-                "summary": "Get a todo list by ID",
-                "operationId": "get-todo-list-by-id",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Todo list ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Get List By Id",
+                "operationId": "get-list-by-id",
                 "responses": {
                     "200": {
-                        "description": "Returns the todo list",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/todo.TodoList"
+                            "$ref": "#/definitions/todo.ListItem"
                         }
                     },
                     "400": {
-                        "description": "Invalid ID",
+                        "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
                     "404": {
-                        "description": "List not found",
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Updates a todo list's title and/or description.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "lists"
-                ],
-                "summary": "Update a todo list",
-                "operationId": "update-todo-list",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Todo list ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Fields to update",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/todo.UpdateListInput"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns success status",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input data or ID",
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
-                    "404": {
-                        "description": "List not found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Deletes a todo list by its ID.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "lists"
-                ],
-                "summary": "Delete a todo list",
-                "operationId": "delete-todo-list",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Todo list ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns success status",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid ID",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "List not found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
+                    "default": {
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -408,57 +184,6 @@ const docTemplate = `{
             }
         },
         "/api/lists/{id}/items": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get all todo items",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "items"
-                ],
-                "summary": "Get all todo items",
-                "operationId": "get-all-items",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "list id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todo.TodoItem"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
             "post": {
                 "security": [
                     {
@@ -545,10 +270,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "token",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "string"
                         }
                     },
                     "400": {
@@ -557,8 +281,20 @@ const docTemplate = `{
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -595,8 +331,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "integer"
                         }
                     },
                     "400": {
@@ -605,8 +340,20 @@ const docTemplate = `{
                             "$ref": "#/definitions/handler.errorResponse"
                         }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -621,6 +368,17 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "handler.getAllListsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/todo.TodoList"
+                    }
                 }
             }
         },
@@ -639,11 +397,17 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.statusResponse": {
+        "todo.ListItem": {
             "type": "object",
             "properties": {
-                "status": {
-                    "type": "string"
+                "id": {
+                    "type": "integer"
+                },
+                "itemId": {
+                    "type": "integer"
+                },
+                "listId": {
+                    "type": "integer"
                 }
             }
         },
@@ -678,31 +442,6 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "todo.UpdateItemInput": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "done": {
-                    "type": "boolean"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "todo.UpdateListInput": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
                 },
                 "title": {
                     "type": "string"
