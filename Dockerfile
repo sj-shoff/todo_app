@@ -1,39 +1,34 @@
-# Этап сборки
-FROM golang:1.22.2-bookworm AS builder
+# Используем многоступенчатую сборку с Alpine
+FROM golang:1.22.2-alpine AS builder
 
-# Система модулей
-ENV GO111MODULE=on
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux
+
+RUN go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
 WORKDIR /app
 
-COPY .env .  
-# Копируем зависимости
 COPY go.mod go.sum ./
-
-# Скачиваем зависимости
 RUN go mod download
 
-# Копируем исходный код
 COPY . .
+RUN go build -ldflags="-w -s" -o todo-app ./cmd/main.go
 
-# Собираем приложение
-RUN go build -o todo-app ./cmd/main.go
+FROM alpine:3.19
 
-# Финальный образ
-FROM debian:bookworm-slim
-
-RUN apt-get update && \
-    apt-get install -y postgresql-client && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Копируем артефакты
-COPY --from=builder /app/.env /app/.env  
-COPY --from=builder /app/todo-app /app/todo-app
-COPY --from=builder /app/wait-for-postgres.sh /app/
-COPY --from=builder /app/configs /app/configs
-
-RUN chmod +x /app/wait-for-postgres.sh
+RUN apk add --no-cache \
+    postgresql15-client \
+    tzdata
 
 WORKDIR /app
 
-CMD ["./wait-for-postgres.sh", "db:5432", "--", "./todo-app"]
+COPY --from=builder /app/todo-app .
+COPY --from=builder /app/wait-for-postgres.sh .
+COPY --from=builder /app/configs ./configs
+COPY --from=builder /app/.env . 
+COPY --from=builder /go/bin/migrate /usr/local/bin/migrate
+
+RUN chmod +x wait-for-postgres.sh
+
+CMD ["./wait-for-postgres.sh", "db", "5432", "./todo-app"]

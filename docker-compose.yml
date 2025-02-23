@@ -3,27 +3,29 @@ version: '3.8'
 services:
   db:
     image: postgres:15
-    restart: always
     environment:
-      POSTGRES_PASSWORD: 03032006
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   todo-app:
     build: .
-    env_file: 
-      - .env  
+    env_file: .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     environment:
       DB_HOST: db
-      DB_PORT: 5432
-      DB_PASSWORD: 03032006
-    command: ["./wait-for-postgres.sh", "db", "5432", "./todo-app"]
+      DB_PASSWORD: ${DB_PASSWORD}
 
 volumes:
   postgres_data:

@@ -1,13 +1,12 @@
 #!/bin/sh
-
 host="$1"
 port="$2"
-cmd="$3"
+shift 2
 
-until pg_isready -h "$host" -p "$port"; do
-  echo "Postgres is unavailable - sleeping"
-  sleep 2
+until nc -z "$host" "$port"; do
+  echo "Waiting for PostgreSQL..."
+  sleep 1
 done
 
-echo "Postgres is up - executing command"
-exec "$cmd"
+echo "PostgreSQL is ready!"
+exec "$@"
