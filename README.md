@@ -1,4 +1,4 @@
-# TODO-App - REST API для управления задачами на Go
+# REST API Для Создания TODO Списков на Go
 
 ## Стек: Go, <a href="https://github.com/gin-gonic/gin">Gin</a>, PostgreSQL, Docker, <a href="https://github.com/jmoiron/sqlx">sqlx</a>, <a href="https://github.com/golang-migrate/migrate">golang-migrate</a>, <a href="https://github.com/spf13/viper">Viper</a>, JWT, <a href="https://github.com/swaggo/swag">Swagger</a>, Slog, <a href="https://github.com/stretchr/testify">testify</a>, Makefile
 
@@ -26,8 +26,8 @@
 
 ### Инфраструктура:
 - Завернул приложение и БД в **Docker-контейнеры** с помощью Docker Compose.
-- Автоматизировал сборку, тестирование и запуск через **Makefile** (цели: `build`, `run`, `migrate`).
-- Настроил переменные окружения для разных сред (development, production).
+- Автоматизировал сборку и запуск через **Makefile** (цели: `build`, `run`, `migrate`).
+- Настроил переменные окружения для разных сред (dev, prod).
 
 ## Для запуска приложения:
 
